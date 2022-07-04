@@ -1,3 +1,4 @@
 # Hello World
 
-[readme.md](readme)
+[readme.md](readme.md)
+[readme.html](readme.html)
