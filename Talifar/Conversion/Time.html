@@ -19,24 +19,28 @@
       <td>1 Talifar Second = xyz Earth Seconds</td>
       <td id="eminutes"></td>
     </tr>
+    
     <tr>
       <td>Talifar Hours:</td>
       <td><input id="thours"></td>
       <td>1 Talifar Second = xyz Earth Seconds</td>
       <td id="ehours"></td>
     </tr>
+    
     <tr>
       <td>Talifar Days:</td>
       <td><input id="tdays"></td>
       <td>1 Talifar Second = xyz Earth Seconds</td>
       <td id="edays"></td>
     </tr>
+    
     <tr>
       <td>Talifar Months:</td>
       <td><input id="tmonths"></td>
       <td>1 Talifar Second = xyz Earth Seconds</td>
       <td id="emonths"></td>
     </tr>
+    
     <tr>
       <td>Talifar Years:</td>
       <td><input id="tyears"></td>
@@ -54,11 +58,32 @@
 
 <script>
         function ToEarthTime() {
+
+          let ESecondsPerTSecond = (60 * 60 * 24) / (100 * 100 * 20); // 60 s/min * 60 min/hr * 24hrs/day = 100 ts/tmin * 100 tmin/thr * 20thr/tday
+          let EMinutesPerTMinute = (60 * 24) / (100 * 20); // 60 minutes/hour * 24hrs/day = 100 tminutes/thr * 20thr/tday
           let EHoursPerTHour = 24 / 20;
+          let EDaysPerTDay = 1 / 1;
+          let EYearsPerTYear = 365.25 / 360;
+          
+          let t_secs = document.getElementById("tseconds").value;
+          let t_mins = document.getElementById("tminutes").value;
           let t_hours = document.getElementById("thours").value;
-          let e_hours = EHoursPerTHour * t_hours
-          document.getElementById("EarthTime").innerHTML = "Earth Time: " + e_hours;
-          document.getElementById("eseconds").innerHTML = "Earth Time: " + e_hours;
+          let t_days = document.getElementById("tdays").value;
+          let t_years = document.getElementById("tyears").value;
+          
+          let e_secs = EHoursPerTHour * t_secs;
+          let e_mins = EHoursPerTHour * t_mins;
+          let e_hours = EHoursPerTHour * t_hours;
+          let e_days = EHoursPerTHour * t_days;
+          let e_years = EHoursPerTHour * t_years;
+
+          document.getElementById("eseconds").innerHTML = "Earth Seconds: " + e_secs;
+          document.getElementById("eminutes").innerHTML = "Earth Minutes: " + e_mins;
+          document.getElementById("ehours").innerHTML = "Earth Hours: " + e_hours;
+          document.getElementById("edays").innerHTML = "Earth Days: " + e_days;
+          document.getElementById("eyears").innerHTML = "Earth Years: " + e_years;
+          
+          document.getElementById("EarthTime").innerHTML = "Earth Time: ";
         }
 </script>
 
