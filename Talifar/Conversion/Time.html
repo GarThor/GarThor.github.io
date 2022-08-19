@@ -86,11 +86,11 @@ table, th, td {
     let t_days = document.getElementById("tdays").value;
     let t_years = document.getElementById("tyears").value;
           
-    let e_secs = EHoursPerTHour * t_secs;
-    let e_mins = EHoursPerTHour * t_mins;
+    let e_secs = ESecondsPerTSecond * t_secs;
+    let e_mins = EMinutesPerTMinute * t_mins;
     let e_hours = EHoursPerTHour * t_hours;
-    let e_days = EHoursPerTHour * t_days;
-    let e_years = EHoursPerTHour * t_years;
+    let e_days = EDaysPerTDay * t_days;
+    let e_years = EYearsPerTYear * t_years;
 
     document.getElementById("eseconds").innerHTML = "Earth Seconds: " + e_secs;
     document.getElementById("eminutes").innerHTML = "Earth Minutes: " + e_mins;
