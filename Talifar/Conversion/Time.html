@@ -14,42 +14,42 @@ table, th, td {
     <tr> 
       <td>Talifar Seconds:</td>
       <td><input id="tseconds"></td>
-      <td>1 Talifar Second = <div id="EarthSecsPerTalifarSecond">Earth Seconds</div></td>
+      <td>1 Talifar Second = <div id="EarthSecsPerTalifarSec">Earth Seconds</div></td>
       <td id="eseconds"></td>
     </tr>
 
     <tr>
       <td>Talifar Minues:</td>
       <td><input id="tminutes"></td>
-      <td>1 Talifar Second = xyz Earth Seconds</td>
+      <td>1 Talifar Minute = <div id="EarthMinsPerTalifarMin">Earth Minutes</td>
       <td id="eminutes"></td>
     </tr>
     
     <tr>
       <td>Talifar Hours:</td>
       <td><input id="thours"></td>
-      <td>1 Talifar Second = xyz Earth Seconds</td>
+      <td>1 Talifar Hour = <div id="EarthHrPerTalifarHr">Earth Hour</td>
       <td id="ehours"></td>
     </tr>
     
     <tr>
       <td>Talifar Days:</td>
       <td><input id="tdays"></td>
-      <td>1 Talifar Second = xyz Earth Seconds</td>
+      <td>1 Talifar Day = <div id="EarthDaysPerTalifarDay">Earth Day</td>
       <td id="edays"></td>
     </tr>
     
     <tr>
       <td>Talifar Months:</td>
       <td><input id="tmonths"></td>
-      <td>1 Talifar Second = xyz Earth Seconds</td>
+      <td>1 Talifar Months = <div id="EarthMonthsPerTalifarMonth">Earth Month</td>
       <td id="emonths"></td>
     </tr>
     
     <tr>
       <td>Talifar Years:</td>
       <td><input id="tyears"></td>
-      <td>1 Talifar Second = xyz Earth Seconds</td>
+      <td>1 Talifar Year = <div id="EarthYearsPerTalifarYear">Earth Years</td>
       <td id="eyears"></td>
     </tr>
   </table>
@@ -69,11 +69,11 @@ table, th, td {
   let EYearsPerTYear = 365.25 / 360;
 
   function OnLoad() {
-    document.getElementById("EarthSecsPerTalifarSecond").innerHTML = ESecondsPerTSecond + "Earth Seconds";
-    // document.getElementById("eminutes").innerHTML = "Earth Minutes: " + e_mins;
-    // document.getElementById("ehours").innerHTML = "Earth Hours: " + e_hours;
-    // document.getElementById("edays").innerHTML = "Earth Days: " + e_days;
-    // document.getElementById("eyears").innerHTML = "Earth Years: " + e_years;
+    document.getElementById("EarthSecsPerTalifarSec").innerHTML = ESecondsPerTSecond + " Earth Seconds";
+    document.getElementById("EarthMinsPerTalifarMin").innerHTML = EMinutesPerTMinute + " Earth Minutes";
+    document.getElementById("EarthHrsPerTalifarHr").innerHTML = EHoursPerTHour + " Earth Hours";
+    document.getElementById("EarthDaysPerTalifarDay").innerHTML = EDaysPerTDay + " Earth Days";
+    document.getElementById("EarthYearsPerTalifarYear").innerHTML = EYearsPerTYear + " Earth Years";
   }
   window.onload = OnLoad;
    
