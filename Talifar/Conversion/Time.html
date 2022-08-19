@@ -62,9 +62,6 @@ table, th, td {
 </p>
 
 <script>
-
-  document.addEventListener ("load", OnLoad);
-
   let ESecondsPerTSecond = (60 * 60 * 24) / (100 * 100 * 20); // 60 s/min * 60 min/hr * 24hrs/day = 100 ts/tmin * 100 tmin/thr * 20thr/tday
   let EMinutesPerTMinute = (60 * 24) / (100 * 20); // 60 minutes/hour * 24hrs/day = 100 tminutes/thr * 20thr/tday
   let EHoursPerTHour = 24 / 20;
@@ -78,6 +75,7 @@ table, th, td {
     // document.getElementById("edays").innerHTML = "Earth Days: " + e_days;
     // document.getElementById("eyears").innerHTML = "Earth Years: " + e_years;
   }
+  window.onload = OnLoad;
    
   function ToEarthTime() {
     let t_secs = document.getElementById("tseconds").value;
@@ -102,7 +100,7 @@ table, th, td {
   }
 </script>
 
-v 1.0.1
+v 1.0.0.2
 
 </body>
 </html>
