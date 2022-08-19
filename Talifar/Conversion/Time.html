@@ -1,0 +1,40 @@
+<html>
+
+<head>
+</head>
+<body>
+
+<p>
+  <table>
+    <tr> 
+      <td>Talifar Seconds:</td>
+      <td><input id="tseconds"></td>
+      <td>1 Talifar Second = xyz Earth Seconds</td>
+      <td><output id="eseconds"></output></td>
+    </tr>
+
+    <!-- Talifar Minues:  <input id="tminutes">      <br>
+    Talifar Hours:   <input id="thours">        <br>
+    Talifar Days:    <input id="tdays">         <br>
+    Talifar Months:  <input id="tmonths">       <br>
+    Talifar Years:   <input id="tyears">        <br> -->
+  </table>
+</p>
+
+<button type="button" onclick="ToEarthTime()">To Earth Time!</button>
+
+<p>
+    <div id="EarthTime">Earth Time: </div>
+</p>
+
+<script>
+        function ToEarthTime() {
+          let EHoursPerTHour = 24 / 20;
+          let t_hours = document.getElementById("thours").value;
+          let e_hours = EHoursPerTHour * t_hours
+          document.getElementById("EarthTime").innerHTML = "Earth Time: " + e_hours;
+        }
+</script>
+
+</body>
+</html>
