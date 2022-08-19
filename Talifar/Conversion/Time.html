@@ -1,5 +1,10 @@
 <html>
-
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
 <head>
 </head>
 <body>
@@ -9,7 +14,7 @@
     <tr> 
       <td>Talifar Seconds:</td>
       <td><input id="tseconds"></td>
-      <td>1 Talifar Second = xyz Earth Seconds</td>
+      <td>1 Talifar Second = <div id="EarthSecsPerTalifarSecond">Earth Seconds</div></td>
       <td id="eseconds"></td>
     </tr>
 
@@ -57,34 +62,44 @@
 </p>
 
 <script>
-        function ToEarthTime() {
 
-          let ESecondsPerTSecond = (60 * 60 * 24) / (100 * 100 * 20); // 60 s/min * 60 min/hr * 24hrs/day = 100 ts/tmin * 100 tmin/thr * 20thr/tday
-          let EMinutesPerTMinute = (60 * 24) / (100 * 20); // 60 minutes/hour * 24hrs/day = 100 tminutes/thr * 20thr/tday
-          let EHoursPerTHour = 24 / 20;
-          let EDaysPerTDay = 1 / 1;
-          let EYearsPerTYear = 365.25 / 360;
-          
-          let t_secs = document.getElementById("tseconds").value;
-          let t_mins = document.getElementById("tminutes").value;
-          let t_hours = document.getElementById("thours").value;
-          let t_days = document.getElementById("tdays").value;
-          let t_years = document.getElementById("tyears").value;
-          
-          let e_secs = EHoursPerTHour * t_secs;
-          let e_mins = EHoursPerTHour * t_mins;
-          let e_hours = EHoursPerTHour * t_hours;
-          let e_days = EHoursPerTHour * t_days;
-          let e_years = EHoursPerTHour * t_years;
+  document.addEventListener ("load", OnLoad);
 
-          document.getElementById("eseconds").innerHTML = "Earth Seconds: " + e_secs;
-          document.getElementById("eminutes").innerHTML = "Earth Minutes: " + e_mins;
-          document.getElementById("ehours").innerHTML = "Earth Hours: " + e_hours;
-          document.getElementById("edays").innerHTML = "Earth Days: " + e_days;
-          document.getElementById("eyears").innerHTML = "Earth Years: " + e_years;
+  let ESecondsPerTSecond = (60 * 60 * 24) / (100 * 100 * 20); // 60 s/min * 60 min/hr * 24hrs/day = 100 ts/tmin * 100 tmin/thr * 20thr/tday
+  let EMinutesPerTMinute = (60 * 24) / (100 * 20); // 60 minutes/hour * 24hrs/day = 100 tminutes/thr * 20thr/tday
+  let EHoursPerTHour = 24 / 20;
+  let EDaysPerTDay = 1 / 1;
+  let EYearsPerTYear = 365.25 / 360;
+
+  function OnLoad() {
+    document.getElementById("EarthSecsPerTalifarSecond").innerHTML = ESecondsPerTSecond + "Earth Seconds";
+    // document.getElementById("eminutes").innerHTML = "Earth Minutes: " + e_mins;
+    // document.getElementById("ehours").innerHTML = "Earth Hours: " + e_hours;
+    // document.getElementById("edays").innerHTML = "Earth Days: " + e_days;
+    // document.getElementById("eyears").innerHTML = "Earth Years: " + e_years;
+  }
+   
+  function ToEarthTime() {
+    let t_secs = document.getElementById("tseconds").value;
+    let t_mins = document.getElementById("tminutes").value;
+    let t_hours = document.getElementById("thours").value;
+    let t_days = document.getElementById("tdays").value;
+    let t_years = document.getElementById("tyears").value;
           
-          document.getElementById("EarthTime").innerHTML = "Earth Time: ";
-        }
+    let e_secs = EHoursPerTHour * t_secs;
+    let e_mins = EHoursPerTHour * t_mins;
+    let e_hours = EHoursPerTHour * t_hours;
+    let e_days = EHoursPerTHour * t_days;
+    let e_years = EHoursPerTHour * t_years;
+
+    document.getElementById("eseconds").innerHTML = "Earth Seconds: " + e_secs;
+    document.getElementById("eminutes").innerHTML = "Earth Minutes: " + e_mins;
+    document.getElementById("ehours").innerHTML = "Earth Hours: " + e_hours;
+    document.getElementById("edays").innerHTML = "Earth Days: " + e_days;
+    document.getElementById("eyears").innerHTML = "Earth Years: " + e_years;
+          
+    document.getElementById("EarthTime").innerHTML = "Earth Time: ";
+  }
 </script>
 
 v 1.0
