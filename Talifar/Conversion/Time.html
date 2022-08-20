@@ -130,18 +130,19 @@ table, th, td {
     document.getElementById("tdays").value    = t_days  ;
     document.getElementById("tyears").value   = t_years ;
 
+    let leap_year_days = parseInt(e_years / 4);
     let total_earth_ms = 
       (e_secs   * 1000 ) + 
       (e_mins   * 1000 * 60) + 
       (e_hours  * 1000 * 60 * 60) + 
-      (e_days   * 1000 * 60 * 60 * 24) + 
-      (e_years  * 1000 * 60 * 60 * 24 * 365.25);
+      ((e_days + leap_year_days) * 1000 * 60 * 60 * 24) + 
+      (e_years  * 1000 * 60 * 60 * 24 * 365);
       
     let normalized_e_seconds  = parseInt((total_earth_ms / ( 1000 * 1                       ))) % 60;
     let normalized_e_minutes  = parseInt((total_earth_ms / ( 1000 * 60                      ))) % 60;
     let normalized_e_hours    = parseInt((total_earth_ms / ( 1000 * 60 * 60                 ))) % 24;
     let normalized_e_days     = parseInt((total_earth_ms / ( 1000 * 60 * 60 * 24            ))) % 365;
-    let normalized_e_years    = parseInt((total_earth_ms / ( 1000 * 60 * 60 * 24 * 365.25   )));
+    let normalized_e_years    = parseInt((total_earth_ms / ( 1000 * 60 * 60 * 24 * 365      )));
 
     document.getElementById("EarthTime").innerHTML = "Earth Time: " 
       + normalized_e_years + " years " 
@@ -157,10 +158,10 @@ table, th, td {
       (t_days   * 1000 * 100 * 100 * 20) + 
       (t_years  * 1000 * 100 * 100 * 20 * 360);
 
-    let normalized_t_seconds  = parseInt((total_talifar_ms / ( 1000 * 1                         ))) % 60;
-    let normalized_t_minutes  = parseInt((total_talifar_ms / ( 1000 * 100                       ))) % 60;
-    let normalized_t_hours    = parseInt((total_talifar_ms / ( 1000 * 100 * 100                 ))) % 24;
-    let normalized_t_days     = parseInt((total_talifar_ms / ( 1000 * 100 * 100 * 20            ))) % 365;
+    let normalized_t_seconds  = parseInt((total_talifar_ms / ( 1000 * 1                         ))) % 100;
+    let normalized_t_minutes  = parseInt((total_talifar_ms / ( 1000 * 100                       ))) % 100;
+    let normalized_t_hours    = parseInt((total_talifar_ms / ( 1000 * 100 * 100                 ))) % 20;
+    let normalized_t_days     = parseInt((total_talifar_ms / ( 1000 * 100 * 100 * 20            ))) % 360;
     let normalized_t_years    = parseInt((total_talifar_ms / ( 1000 * 100 * 100 * 20 * 360      )));
 
     document.getElementById("TalifarTime").innerHTML = "Talifar Time: "
