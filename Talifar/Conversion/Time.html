@@ -12,31 +12,27 @@ table, th, td {
 <p>
   <table>
     <tr> 
-      <td>Talifar Seconds:</td>
-      <td><input id="tseconds"></td>
+      <td>Talifar Seconds: </td><td> <input id="tseconds" tabindex="1"> </td>
       <td>1 Talifar Second = <div id="EarthSecsPerTalifarSec">Earth Seconds</div></td>
-      <td id="eseconds"></td>
+      <td>Earth Seconds: </td><td> <input id="eseconds" tabindex="6"></td>
     </tr>
 
     <tr>
-      <td>Talifar Minues:</td>
-      <td><input id="tminutes"></td>
+      <td>Talifar Minutes:  </td><td> <input id="tminutes" tabindex="2"></td>
       <td>1 Talifar Minute = <div id="EarthMinsPerTalifarMin">Earth Minutes</td>
-      <td id="eminutes"></td>
+      <td>Earth Minutes: </td><td> <input id="eminutes" tabindex="7"></td>
     </tr>
     
     <tr>
-      <td>Talifar Hours:</td>
-      <td><input id="thours"></td>
+      <td>Talifar Hours:  </td><td> <input id="thours" tabindex="3"></td>
       <td>1 Talifar Hour = <div id="EarthHrsPerTalifarHr">Earth Hour</td>
-      <td id="ehours"></td>
+      <td>Earth Hours: </td><td> <input id="ehours" tabindex="8"></td>
     </tr>
     
     <tr>
-      <td>Talifar Days:</td>
-      <td><input id="tdays"></td>
+      <td>Talifar Days:  </td><td> <input id="tdays" tabindex="4"></td>
       <td>1 Talifar Day = <div id="EarthDaysPerTalifarDay">Earth Day</td>
-      <td id="edays"></td>
+      <td>Earth Days: </td><td> <input id="edays" tabindex="9"></td>
     </tr>
     
     <!-- Let's not do month's in this version, because months are variable on earth.
@@ -49,15 +45,15 @@ table, th, td {
     -->
     
     <tr>
-      <td>Talifar Years:</td>
-      <td><input id="tyears"></td>
+      <td>Talifar Years: </td><td> <input id="tyears" tabindex="5"></td>
       <td>1 Talifar Year = <div id="EarthYearsPerTalifarYear">Earth Years</td>
-      <td id="eyears"></td>
+      <td>Earth Years: </td><td> <input id="eyears" tabindex="10"></td>
     </tr>
   </table>
 </p>
 
 <button type="button" onclick="ToEarthTime()">To Earth Time!</button>
+<button type="button" onclick="ToTalifarTime()">To Talifar Time!</button>
 
 <p>
     <div id="EarthTime">Earth Time: </div>
@@ -70,6 +66,12 @@ table, th, td {
   let EDaysPerTDay = 1 / 1;
   let EYearsPerTYear = 365.25 / 360;
 
+  let TSecondsPerESecond = (100 * 100 * 20) / (60 * 60 * 24); // 60 s/min * 60 min/hr * 24hrs/day = 100 ts/tmin * 100 tmin/thr * 20thr/tday
+  let TMinutesPerEMinute = (100 * 20) / (60 * 24); // 60 minutes/hour * 24hrs/day = 100 tminutes/thr * 20thr/tday
+  let THoursPerEHour = 20 / 24;
+  let TDaysPerEDay = 1 / 1;
+  let TYearsPerEYear = 360 / 365.25;
+
   function OnLoad() {
     document.getElementById("EarthSecsPerTalifarSec").innerHTML = ESecondsPerTSecond + " Earth Seconds";
     document.getElementById("EarthMinsPerTalifarMin").innerHTML = EMinutesPerTMinute + " Earth Minutes";
@@ -78,7 +80,13 @@ table, th, td {
     document.getElementById("EarthYearsPerTalifarYear").innerHTML = EYearsPerTYear + " Earth Years";
   }
   window.onload = OnLoad;
-   
+
+  // See this documentation about why "correction factors" works here: https://stackoverflow.com/a/18908122
+  function Convert(ratio, number, correctionFactor = 1.0)
+  {
+    return ratio * correctionFactor * number * correctionFactor / Math.pow(correctionFactor, 2);
+  }
+
   function ToEarthTime() {
     let t_secs = document.getElementById("tseconds").value;
     let t_mins = document.getElementById("tminutes").value;
@@ -86,17 +94,28 @@ table, th, td {
     let t_days = document.getElementById("tdays").value;
     let t_years = document.getElementById("tyears").value;
           
-    let e_secs = ESecondsPerTSecond * t_secs;
-    let e_mins = EMinutesPerTMinute * t_mins;
-    let e_hours = EHoursPerTHour * t_hours;
-    let e_days = EDaysPerTDay * t_days;
-    let e_years = EYearsPerTYear * t_years;
+    document.getElementById("eseconds").value = Convert(ESecondsPerTSecond, t_secs, 1000);
+    document.getElementById("eminutes").value = Convert(EMinutesPerTMinute, t_mins, 100);
+    document.getElementById("ehours").value   = Convert(EHoursPerTHour, t_hours, 10); 
+    document.getElementById("edays").value    = Convert(EDaysPerTDay, t_days);
+    document.getElementById("eyears").value   = Convert(EYearsPerTYear, t_years);
+          
+    document.getElementById("EarthTime").innerHTML = "Earth Time: ";
+  }
 
-    document.getElementById("eseconds").innerHTML = "Earth Seconds: " + e_secs;
-    document.getElementById("eminutes").innerHTML = "Earth Minutes: " + e_mins;
-    document.getElementById("ehours").innerHTML = "Earth Hours: " + e_hours;
-    document.getElementById("edays").innerHTML = "Earth Days: " + e_days;
-    document.getElementById("eyears").innerHTML = "Earth Years: " + e_years;
+  function ToTalifarTime() {
+    let e_secs = document.getElementById("eseconds").value;
+    let e_mins = document.getElementById("eminutes").value;
+    let e_hours = document.getElementById("ehours").value;
+    let e_days = document.getElementById("edays").value;
+    let e_years = document.getElementById("eyears").value;
+          
+    // See this documentation about why "correction factors" works here: https://stackoverflow.com/a/18908122
+    document.getElementById("tseconds").value = Convert(TSecondsPerESecond, e_secs, 1000);
+    document.getElementById("tminutes").value = Convert(TMinutesPerEMinute, e_mins, 100);
+    document.getElementById("thours").value   = Convert(THoursPerEHour, e_hours, 10);
+    document.getElementById("tdays").value    = Convert(TDaysPerEDay, e_days);
+    document.getElementById("tyears").value   = Convert(TYearsPerEYear, e_years);
           
     document.getElementById("EarthTime").innerHTML = "Earth Time: ";
   }
