@@ -13,47 +13,20 @@ table, th, td {
   <table>
     <tr> 
       <td>Volume A: </td><td> <input id="InVolumeA" tabindex="1"> </td>
-      <td>1 Talifar Second = <div id="EarthSecsPerTalifarSec">Earth Seconds</div></td>
-      <td>Earth Seconds: </td><td> <input id="eseconds" tabindex="6"></td>
     </tr>
 
     <tr>
-      <td>Talifar Minutes:  </td><td> <input id="tminutes" tabindex="2"></td>
-      <td>1 Talifar Minute = <div id="EarthMinsPerTalifarMin">Earth Minutes</td>
-      <td>Earth Minutes: </td><td> <input id="eminutes" tabindex="7"></td>
+      <td>Volume B:  </td><td> <input id="InVolumeB" tabindex="2"></td>
     </tr>
     
     <tr>
-      <td>Talifar Hours:  </td><td> <input id="thours" tabindex="3"></td>
-      <td>1 Talifar Hour = <div id="EarthHrsPerTalifarHr">Earth Hour</td>
-      <td>Earth Hours: </td><td> <input id="ehours" tabindex="8"></td>
-    </tr>
-    
-    <tr>
-      <td>Talifar Days:  </td><td> <input id="tdays" tabindex="4"></td>
-      <td>1 Talifar Day = <div id="EarthDaysPerTalifarDay">Earth Day</td>
-      <td>Earth Days: </td><td> <input id="edays" tabindex="9"></td>
-    </tr>
-    
-    <!-- Let's not do month's in this version, because months are variable on earth.
-      <tr>
-        <td>Talifar Months:</td>
-        <td><input id="tmonths"></td>
-        <td>1 Talifar Months = <div id="EarthMonthsPerTalifarMonth">Earth Month</td>
-        <td id="emonths"></td>
-      </tr>
-    -->
-    
-    <tr>
-      <td>Talifar Years: </td><td> <input id="tyears" tabindex="5"></td>
-      <td>1 Talifar Year = <div id="EarthYearsPerTalifarYear">Earth Years</td>
-      <td>Earth Years: </td><td> <input id="eyears" tabindex="10"></td>
+      <td>Ratio:  </td><td> <input id="InRatio" tabindex="3"></td>
     </tr>
   </table>
 </p>
 
-<button type="button" onclick="ToEarthTime()">To Earth Time!</button>
-<button type="button" onclick="ToTalifarTime()">To Talifar Time!</button>
+<button type="button" onclick="CalculateB()">Give me volume B!</button>
+<button type="button" onclick="CalculateA()">Give me volume A!</button>
 
 <p>
   <div id="EarthTime"></div>
