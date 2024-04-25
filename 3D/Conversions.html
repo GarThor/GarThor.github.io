@@ -34,6 +34,9 @@ table, th, td {
 <button type="button" onclick="CalculateA()">Give me volume A!</button><br>
 <button type="button" onclick="CalculateB()">Give me volume B!</button><br>
 <button type="button" onclick="CalculateC()">Give me volume A & B!</button><br>
+<br>
+<button type="button" onclick="ResetVolumes()">Reset Volumes!</button><br>
+<button type="button" onclick="ResetRatios()">Reset Ratios!</button><br>
 
 <p>
   <div id="Debug"></div>
@@ -45,6 +48,19 @@ table, th, td {
       document.getElementById("RatioB").value = 1;
   }
   window.onload = OnLoad;
+
+  function ResetVolumes()
+  {
+    document.getElementById("VolumeA").value = null;
+    document.getElementById("VolumeB").value = null;
+    document.getElementById("VolumeC").value = null;
+  }
+
+  function ResetRatios()
+  {
+    document.getElementById("RatioA").value = 1;
+    document.getElementById("RatioB").value = 1;
+  }
 
   // See this documentation about why "correction factors" works here: https://stackoverflow.com/a/18908122
   function Convert(ratio, number, correctionFactor = 1.0)
@@ -157,7 +173,7 @@ table, th, td {
 </script>
 
   <br><br>
-v 1.0.0.4
+v 1.0.0.5
 
 </body>
 </html>
