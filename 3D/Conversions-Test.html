@@ -1,0 +1,271 @@
+<html>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+<head>
+</head>
+<body>
+
+<p>
+  <div id="Inputs">
+    <div id="InputTable" style="min-width: 600px; max-width: 600px">
+        <div id="Material-Dropdown" style="float:right; vertical-align:bottom">
+            <label for="Materials">Material: </label>
+            <select name="Materials" id="Materials" onchange="ChangeMaterial()">
+                <option value="one-to-one">1:1</option>
+                <option value="mold-max-30">Mold Max 30 (Smoothon)</option>
+            </select>
+        </div>
+        <div id="VolumesAB" style="overflow: hidden;">
+            <table>
+                <tr> 
+                <td>Volume A: </td>
+                <td><input id="VolumeA" tabindex="1" size=26></td>
+                </tr>
+
+                <tr>
+                <td>Volume B:  </td>
+                <td><input id="VolumeB" tabindex="2" size=26></td>
+                </tr>
+                
+                <tr>
+                <td>Ratio:  </td>
+                <td> 
+                    <input id="RatioA" tabindex="3" size=10> 
+                    <input id="RatioB" tabindex="4" size=10>
+                </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <br>
+    <table>
+        <tr> 
+        <td>Total Volume: </td><td> <input id="VolumeC" tabindex="5" size=26> </td>
+        </tr>
+    </table>
+
+  </div>
+</p>
+
+
+<button type="button" onclick="CalculateA()">Give me volume A!</button><br>
+<button type="button" onclick="CalculateB()">Give me volume B!</button><br>
+<button type="button" onclick="CalculateC()">Give me volume A & B!</button><br>
+<br>
+<button type="button" onclick="ResetVolumes()">Reset Volumes!</button><br>
+<button type="button" onclick="ResetRatios()">Reset Ratios!</button><br>
+
+<p>
+  <div id="Debug"></div>
+</p>
+
+<script
+  src="https://code.jquery.com/jquery-3.7.1.slim.js"
+  integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
+  crossorigin="anonymous"></script>
+<script src="jquery.csv.js"></script>
+<script>
+  let $Materials = [];
+  
+  $(document).ready(function() {
+    document.getElementById("Debug").innerHTML = "ready";
+
+    const logFileText = async file => {
+        try {
+            document.getElementById("Debug").innerHTML = "fetch";
+            const response = await fetch(file);
+            document.getElementById("Debug").innerHTML = "more fetch";
+            const text = await response.text();
+            console.log(text)
+        }
+        catch (error) {
+            console.error(`Download error: ${error.message}`);
+        }
+    }
+
+    logFileText('./test.csv')
+
+    // var rawFile = new XMLHttpRequest();
+    // rawFile.open("GET", "./test.csv", false);
+    // rawFile.onreadystatechange = function () {
+    //     if(rawFile.readyState === 4)  {
+    //     if(rawFile.status === 200 || rawFile.status == 0) {
+    //         var allText = rawFile.responseText;
+    //         console.log(allText);
+    //     }
+    //     }
+    // }
+    // rawFile.send(null);
+
+    // const reader = new FileReader();
+    // reader.addEventListener("load", () => {
+    //     document.getElementById("Debug").innerHTML = "load";
+    //     document.getElementById("Debug").innerHTML += "Result: " + reader.result + "<br>";
+
+    //     $Materials = $.csv.toObjects(reader.result);
+    //     document.getElementById("Debug").innerHTML += "ToObjects:" + JSON.stringify(Materials, null, 2);
+
+    //     $Materials.forEach(() => {
+    //         document.getElementById("Debug").innerHTML += "<li> element";
+    //     })
+    // });
+
+    // const file = new File(["why isn't this working?", "why do I only get this garbage?"], "test.csv", { type: "text/plain", });
+    // reader.readAsText(file);
+  });
+
+  function OnLoad() {
+      document.getElementById("RatioA").value = 1;
+      document.getElementById("RatioB").value = 1;
+  }
+  window.onload = OnLoad;
+
+  function ResetVolumes()
+  {
+    document.getElementById("VolumeA").value = null;
+    document.getElementById("VolumeB").value = null;
+    document.getElementById("VolumeC").value = null;
+  }
+
+  function ResetRatios(InRatioA = 1, InRatioB = 1)
+  {
+    ChangeMaterial()
+  }
+
+  function ChangeMaterial()
+  {
+    var InMaterial = document.getElementById("Materials").value;
+    document.getElementById("Debug").innerHTML = "You selected: " + InMaterial;
+
+    switch (InMaterial)
+    {
+        case "one-to-one":
+            document.getElementById("RatioA").value = 1;
+            document.getElementById("RatioB").value = 1;
+            break;
+        case "mold-max-30":
+            document.getElementById("RatioA").value = 100;
+            document.getElementById("RatioB").value = 1;
+            break;
+    }
+  }
+
+  // See this documentation about why "correction factors" works here: https://stackoverflow.com/a/18908122
+  function Convert(ratio, number, correctionFactor = 1.0)
+  {
+    return ratio * correctionFactor * number * correctionFactor / Math.pow(correctionFactor, 2);
+  }
+
+  function CalculateA() {
+    let InVolumeB = document.getElementById("VolumeB").value;
+    let InRatioA = document.getElementById("RatioA").value;
+    let InRatioB = document.getElementById("RatioB").value;
+          
+    InVolumeB  = InVolumeB   ? InVolumeB   : 0;
+    InRatioA  = InRatioA   ? InRatioA   : 0;
+    InRatioB  = InRatioB   ? InRatioB   : 0;
+
+    if (InRatioA <= 0)
+    {
+      InRatioA = 1;
+      document.getElementById("RatioA").value = InRatioA;
+    }
+    if (InRatioB <= 0)
+    {
+      InRatioB = 1;
+      document.getElementById("RatioB").value = InRatioB;
+    }
+
+    let InRatio = InRatioA / InRatioB;
+
+    document.getElementById("Debug").innerHTML = "Calculating Amount of A Based on input:" 
+        + "<br>B = " + InVolumeB
+        + "<br>Ratio " + InRatioA + ":" + InRatioB
+        + " or " + (Number.isInteger(InRatio) ? InRatio.toFixed(1) : InRatio) + " to 1.";
+    
+    let OutVolumeA  = Convert(InRatio, InVolumeB, 1000);
+    let OutVolumeC  = parseFloat(InVolumeB) + parseFloat(OutVolumeA);
+
+    document.getElementById("VolumeA").value = OutVolumeA;
+    document.getElementById("VolumeC").value = OutVolumeC;
+  }
+
+  function CalculateB() {
+    let InVolumeA = document.getElementById("VolumeA").value;
+    let InRatioA = document.getElementById("RatioA").value;
+    let InRatioB = document.getElementById("RatioB").value;
+          
+    InVolumeA  = InVolumeA   ? InVolumeA   : 0;
+    InRatioA  = InRatioA   ? InRatioA   : 0;
+    InRatioB  = InRatioB   ? InRatioB   : 0;
+
+    if (InRatioA <= 0)
+    {
+      InRatioA = 1;
+      document.getElementById("RatioA").value = InRatioA;
+    }
+    if (InRatioB <= 0)
+    {
+      InRatioB = 1;
+      document.getElementById("RatioB").value = InRatioB;
+    }
+
+    let InRatio = InRatioB / InRatioA;
+
+    document.getElementById("Debug").innerHTML = "Calculating Amount of B Based on input:" 
+        + "<br>A = " + InVolumeA
+        + "<br>Ratio " + InRatioB + ":" + InRatioA
+        + " or " + (Number.isInteger(InRatio) ? InRatio.toFixed(1) : InRatio) + " to 1.";
+    
+    let OutVolumeB  = Convert(InRatio, InVolumeA, 1000);
+    let OutVolumeC  = parseFloat(OutVolumeB) + parseFloat(InVolumeA);
+
+    document.getElementById("VolumeB").value = OutVolumeB;
+    document.getElementById("VolumeC").value = OutVolumeC;
+  }
+
+  function CalculateC() {
+    let InVolumeC = document.getElementById("VolumeC").value;
+    let InRatioA = document.getElementById("RatioA").value;
+    let InRatioB = document.getElementById("RatioB").value;
+          
+    InVolumeC  = InVolumeC   ? InVolumeC   : 0;
+    InRatioA  = InRatioA   ? InRatioA   : 0;
+    InRatioB  = InRatioB   ? InRatioB   : 0;
+
+    if (InRatioA <= 0)
+    {
+      InRatioA = 1;
+      document.getElementById("RatioA").value = InRatioA;
+    }
+    if (InRatioB <= 0)
+    {
+      InRatioB = 1;
+      document.getElementById("RatioB").value = InRatioB;
+    }
+
+    let InRatioBA = InRatioB / InRatioA;
+    let InRatioAB = InRatioA / InRatioB;
+
+    document.getElementById("Debug").innerHTML = "Calculating Amount of A + B Based on input:" 
+        + "<br>C = " + InVolumeC
+        + "<br>Ratio " + InRatioA + ":" + InRatioB
+        + " or " + (Number.isInteger(InRatioAB) ? InRatioAB.toFixed(1) : InRatioAB) + " to 1.";
+    
+    let OutVolumeA  = Convert(1/(1+InRatioAB), InVolumeC, 1000);
+    let OutVolumeB  = Convert(InRatioAB / (1 + InRatioAB), InVolumeC, 1000);
+
+    document.getElementById("VolumeA").value = OutVolumeA;
+    document.getElementById("VolumeB").value = OutVolumeB;
+  }
+</script>
+
+  <br><br>
+v 1.0.0.5
+
+</body>
+</html>
