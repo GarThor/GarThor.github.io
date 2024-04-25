@@ -20,7 +20,7 @@ table, th, td {
     </tr>
     
     <tr>
-      <td>Ratio:  </td><td> <input id="Ratio" tabindex="3"></td>
+      <td>Ratio:  </td><td> <input id="RatioA" tabindex="3" size=30><input id="RatioB" tabindex="4" size=30></td>
     </tr>
   </table>
 </p>
@@ -30,6 +30,8 @@ table, th, td {
 
 <script>
   function OnLoad() {
+      document.getElementById("RatioA").value = 1;
+      document.getElementById("RatioB").value = 1;
   }
   window.onload = OnLoad;
 
@@ -41,11 +43,26 @@ table, th, td {
 
   function CalculateA() {
     let InVolumeB = document.getElementById("VolumeB").value;
-    let InRatio = document.getElementById("Ratio").value;
+    let InRatioA = document.getElementById("RatioA").value;
+    let InRatioB = document.getElementById("RatioB").value;
           
-    InVolumeB  = InVolumeB   ? InVolumeB   : 0;
-    InRatio  = InRatio   ? InRatio   : 0;
+    let InVolumeB  = InVolumeB   ? InVolumeB   : 0;
+    let InRatioA  = InRatioA   ? InRatioA   : 0;
+    let InRatioB  = InRatioB   ? InRatioB   : 0;
 
+    if (InRatioA <= 0)
+    {
+      InRatioA = 1;
+      document.getElementById("RatioA").value = InRatioA;
+    }
+    if (InRatioB <= 0)
+    {
+      InRatioB = 1;
+      document.getElementById("RatioB").value = InRatioB;
+    }
+    
+    let InRatio = InRatioB / InRatioA;
+    
     let OutVolumeA  = Convert(InRatio, InVolumeB, 1000);
 
     document.getElementById("VolumeA").value = OutVolumeA  ;
