@@ -23,10 +23,17 @@ table, th, td {
       <td>Ratio:  </td><td> <input id="RatioA" tabindex="3" size=10> <input id="RatioB" tabindex="4" size=10></td>
     </tr>
   </table>
+  <br>
+  <table>
+    <tr> 
+      <td>Total Volume: </td><td> <input id="VolumeC" tabindex="5" size=26> </td>
+    </tr>
+  </table>
 </p>
 
-<button type="button" onclick="CalculateA()">Give me volume A!</button>
-<button type="button" onclick="CalculateB()">Give me volume B!</button>
+<button type="button" onclick="CalculateA()">Give me volume A!</button><br>
+<button type="button" onclick="CalculateB()">Give me volume B!</button><br>
+<button type="button" onclick="CalculateC()">Give me volume A & B!</button><br>
 
 <p>
   <div id="Debug"></div>
@@ -73,80 +80,49 @@ table, th, td {
         + " or " + (Number.isInteger(InRatio) ? InRatio.toFixed(1) : InRatio) + " to 1.";
     
     let OutVolumeA  = Convert(InRatio, InVolumeB, 1000);
+    let OutVolumeC  = parseFloat(InVolumeB) + parseFloat(OutVolumeA);
 
-    document.getElementById("VolumeA").value = OutVolumeA  ;
+    document.getElementById("VolumeA").value = OutVolumeA;
+    document.getElementById("VolumeC").value = OutVolumeC;
   }
 
-  function ToTalifarTime() {
-    let e_secs  = parseFloat(document.getElementById("eseconds").value);
-    let e_mins  = parseFloat(document.getElementById("eminutes").value);
-    let e_hours = parseFloat(document.getElementById("ehours").value);
-    let e_days  = parseFloat(document.getElementById("edays").value);
-    let e_years = parseFloat(document.getElementById("eyears").value);
+  function CalculateB() {
+    let InVolumeA = document.getElementById("VolumeA").value;
+    let InRatioA = document.getElementById("RatioA").value;
+    let InRatioB = document.getElementById("RatioB").value;
+          
+    InVolumeA  = InVolumeA   ? InVolumeA   : 0;
+    InRatioA  = InRatioA   ? InRatioA   : 0;
+    InRatioB  = InRatioB   ? InRatioB   : 0;
 
-    e_secs  = e_secs   ? e_secs   : 0;
-    e_mins  = e_mins   ? e_mins   : 0;
-    e_hours = e_hours  ? e_hours  : 0;
-    e_days  = e_days   ? e_days   : 0;
-    e_years = e_years  ? e_years  : 0;
+    if (InRatioA <= 0)
+    {
+      InRatioA = 1;
+      document.getElementById("RatioA").value = InRatioA;
+    }
+    if (InRatioB <= 0)
+    {
+      InRatioB = 1;
+      document.getElementById("RatioB").value = InRatioB;
+    }
 
-    let t_secs  = Convert(TSecondsPerESecond, e_secs, 1000);
-    let t_mins  = Convert(TMinutesPerEMinute, e_mins, 100);
-    let t_hours = Convert(THoursPerEHour, e_hours, 10);
-    let t_days  = Convert(TDaysPerEDay, e_days);
-    let t_years = Convert(TYearsPerEYear, e_years);
+    let InRatio = InRatioB / InRatioA;
 
-    document.getElementById("tseconds").value = t_secs  ;
-    document.getElementById("tminutes").value = t_mins  ;
-    document.getElementById("thours").value   = t_hours ;
-    document.getElementById("tdays").value    = t_days  ;
-    document.getElementById("tyears").value   = t_years ;
+    document.getElementById("Debug").innerHTML = "Calculating Amount of B Based on input:" 
+        + "<br>A = " + InVolumeA
+        + "<br>Ratio " + InRatioA + ":" + InRatioB
+        + " or " + (Number.isInteger(InRatio) ? InRatio.toFixed(1) : InRatio) + " to 1.";
+    
+    let OutVolumeB  = Convert(InRatio, InVolumeA, 1000);
+    let OutVolumeC  = parseFloat(OutVolumeB) + parseFloat(InVolumeA);
 
-    let leap_year_days = parseInt(e_years / 4);
-    let total_earth_ms = 
-      (e_secs   * 1000 ) + 
-      (e_mins   * 1000 * 60) + 
-      (e_hours  * 1000 * 60 * 60) + 
-      ((e_days + leap_year_days) * 1000 * 60 * 60 * 24) + 
-      (e_years  * 1000 * 60 * 60 * 24 * 365);
-      
-    let normalized_e_seconds  = parseInt((total_earth_ms / ( 1000 * 1                       ))) % 60;
-    let normalized_e_minutes  = parseInt((total_earth_ms / ( 1000 * 60                      ))) % 60;
-    let normalized_e_hours    = parseInt((total_earth_ms / ( 1000 * 60 * 60                 ))) % 24;
-    let normalized_e_days     = parseInt((total_earth_ms / ( 1000 * 60 * 60 * 24            ))) % 365;
-    let normalized_e_years    = parseInt((total_earth_ms / ( 1000 * 60 * 60 * 24 * 365      )));
-
-    document.getElementById("EarthTime").innerHTML = "Earth Time: " 
-      + normalized_e_years + " years " 
-      + normalized_e_days + " days " 
-      + normalized_e_hours + " hours " 
-      + normalized_e_minutes + " minutes " 
-      + normalized_e_seconds + " seconds ";
-
-    let total_talifar_ms = 
-      (t_secs   * 1000)  + 
-      (t_mins   * 1000 * 100) + 
-      (t_hours  * 1000 * 100 * 100) + 
-      (t_days   * 1000 * 100 * 100 * 20) + 
-      (t_years  * 1000 * 100 * 100 * 20 * 360);
-
-    let normalized_t_seconds  = parseInt((total_talifar_ms / ( 1000 * 1                         ))) % 100;
-    let normalized_t_minutes  = parseInt((total_talifar_ms / ( 1000 * 100                       ))) % 100;
-    let normalized_t_hours    = parseInt((total_talifar_ms / ( 1000 * 100 * 100                 ))) % 20;
-    let normalized_t_days     = parseInt((total_talifar_ms / ( 1000 * 100 * 100 * 20            ))) % 360;
-    let normalized_t_years    = parseInt((total_talifar_ms / ( 1000 * 100 * 100 * 20 * 360      )));
-
-    document.getElementById("TalifarTime").innerHTML = "Talifar Time: "
-      + normalized_t_years + " years " 
-      + normalized_t_days + " days " 
-      + normalized_t_hours + " hours " 
-      + normalized_t_minutes + " minutes " 
-      + normalized_t_seconds + " seconds ";
+    document.getElementById("VolumeB").value = OutVolumeB;
+    document.getElementById("VolumeC").value = OutVolumeC;
   }
 </script>
 
   <br><br>
-v 1.0.0.2
+v 1.0.0.1
 
 </body>
 </html>
