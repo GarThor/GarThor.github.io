@@ -1,3 +1,4 @@
 name,pretty_name,volume_a,volume_b
 one-to-one,1:1,1,1
 mold-max-30,Mold Max 30 (Smoothon),100,1
+test-material,My Test,42,7
