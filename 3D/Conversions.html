@@ -12,46 +12,24 @@ table, th, td {
 <p>
   <table>
     <tr> 
-      <td>Volume A: </td><td> <input id="InVolumeA" tabindex="1"> </td>
+      <td>Volume A: </td><td> <input id="VolumeA" tabindex="1"> </td>
     </tr>
 
     <tr>
-      <td>Volume B:  </td><td> <input id="InVolumeB" tabindex="2"></td>
+      <td>Volume B:  </td><td> <input id="VolumeB" tabindex="2"></td>
     </tr>
     
     <tr>
-      <td>Ratio:  </td><td> <input id="InRatio" tabindex="3"></td>
+      <td>Ratio:  </td><td> <input id="Ratio" tabindex="3"></td>
     </tr>
   </table>
 </p>
 
-<button type="button" onclick="CalculateB()">Give me volume B!</button>
 <button type="button" onclick="CalculateA()">Give me volume A!</button>
-
-<p>
-  <div id="EarthTime"></div>
-  <div id="TalifarTime">Talifar Time: </div>
-</p>
+<button type="button" onclick="CalculateB()">Give me volume B!</button>
 
 <script>
-  let ESecondsPerTSecond = (60 * 60 * 24) / (100 * 100 * 20); // 60 s/min * 60 min/hr * 24hrs/day = 100 ts/tmin * 100 tmin/thr * 20thr/tday
-  let EMinutesPerTMinute = (60 * 24) / (100 * 20); // 60 minutes/hour * 24hrs/day = 100 tminutes/thr * 20thr/tday
-  let EHoursPerTHour = 24 / 20;
-  let EDaysPerTDay = 1 / 1;
-  let EYearsPerTYear = 365.25 / 360;
-
-  let TSecondsPerESecond = (100 * 100 * 20) / (60 * 60 * 24); // 60 s/min * 60 min/hr * 24hrs/day = 100 ts/tmin * 100 tmin/thr * 20thr/tday
-  let TMinutesPerEMinute = (100 * 20) / (60 * 24); // 60 minutes/hour * 24hrs/day = 100 tminutes/thr * 20thr/tday
-  let THoursPerEHour = 20 / 24;
-  let TDaysPerEDay = 1 / 1;
-  let TYearsPerEYear = 360 / 365.25;
-
   function OnLoad() {
-    document.getElementById("EarthSecsPerTalifarSec").innerHTML = ESecondsPerTSecond + " Earth Seconds";
-    document.getElementById("EarthMinsPerTalifarMin").innerHTML = EMinutesPerTMinute + " Earth Minutes";
-    document.getElementById("EarthHrsPerTalifarHr").innerHTML = EHoursPerTHour + " Earth Hours";
-    document.getElementById("EarthDaysPerTalifarDay").innerHTML = EDaysPerTDay + " Earth Days";
-    document.getElementById("EarthYearsPerTalifarYear").innerHTML = EYearsPerTYear + " Earth Years";
   }
   window.onload = OnLoad;
 
@@ -61,71 +39,16 @@ table, th, td {
     return ratio * correctionFactor * number * correctionFactor / Math.pow(correctionFactor, 2);
   }
 
-  function ToEarthTime() {
-    let t_secs = document.getElementById("tseconds").value;
-    let t_mins = document.getElementById("tminutes").value;
-    let t_hours = document.getElementById("thours").value;
-    let t_days = document.getElementById("tdays").value;
-    let t_years = document.getElementById("tyears").value;
+  function CalculateA() {
+    let InVolumeB = document.getElementById("VolumeB").value;
+    let InRatio = document.getElementById("Ratio").value;
           
-    t_secs  = t_secs   ? t_secs   : 0;
-    t_mins  = t_mins   ? t_mins   : 0;
-    t_hours = t_hours  ? t_hours  : 0;
-    t_days  = t_days   ? t_days   : 0;
-    t_years = t_years  ? t_years  : 0;
+    InVolumeB  = InVolumeB   ? InVolumeB   : 0;
+    InRatio  = InRatio   ? InRatio   : 0;
 
-    let e_secs  = Convert(ESecondsPerTSecond, t_secs, 1000);
-    let e_mins  = Convert(EMinutesPerTMinute, t_mins, 100);
-    let e_hours = Convert(EHoursPerTHour, t_hours, 10); 
-    let e_days  = Convert(EDaysPerTDay, t_days);
-    let e_years = Convert(EYearsPerTYear, t_years);
+    let OutVolumeA  = Convert(InRatio, InVolumeB, 1000);
 
-    document.getElementById("eseconds").value = e_secs  ;
-    document.getElementById("eminutes").value = e_mins  ;
-    document.getElementById("ehours").value   = e_hours ;
-    document.getElementById("edays").value    = e_days  ;
-    document.getElementById("eyears").value   = e_years ;
-          
-    let leap_year_days = parseInt(e_years / 4);
-    let total_earth_ms = 
-      (e_secs   * 1000 ) + 
-      (e_mins   * 1000 * 60) + 
-      (e_hours  * 1000 * 60 * 60) + 
-      ((e_days + leap_year_days) * 1000 * 60 * 60 * 24) + 
-      (e_years  * 1000 * 60 * 60 * 24 * 365);
-      
-    let normalized_e_seconds  = parseInt((total_earth_ms / ( 1000 * 1                       ))) % 60;
-    let normalized_e_minutes  = parseInt((total_earth_ms / ( 1000 * 60                      ))) % 60;
-    let normalized_e_hours    = parseInt((total_earth_ms / ( 1000 * 60 * 60                 ))) % 24;
-    let normalized_e_days     = parseInt((total_earth_ms / ( 1000 * 60 * 60 * 24            ))) % 365;
-    let normalized_e_years    = parseInt((total_earth_ms / ( 1000 * 60 * 60 * 24 * 365      )));
-
-    document.getElementById("EarthTime").innerHTML = "Earth Time: " 
-      + normalized_e_years + " years " 
-      + normalized_e_days + " days " 
-      + normalized_e_hours + " hours " 
-      + normalized_e_minutes + " minutes " 
-      + normalized_e_seconds + " seconds ";
-
-    let total_talifar_ms = 
-      (t_secs   * 1000)  + 
-      (t_mins   * 1000 * 100) + 
-      (t_hours  * 1000 * 100 * 100) + 
-      (t_days   * 1000 * 100 * 100 * 20) + 
-      (t_years  * 1000 * 100 * 100 * 20 * 360);
-
-    let normalized_t_seconds  = parseInt((total_talifar_ms / ( 1000 * 1                         ))) % 100;
-    let normalized_t_minutes  = parseInt((total_talifar_ms / ( 1000 * 100                       ))) % 100;
-    let normalized_t_hours    = parseInt((total_talifar_ms / ( 1000 * 100 * 100                 ))) % 20;
-    let normalized_t_days     = parseInt((total_talifar_ms / ( 1000 * 100 * 100 * 20            ))) % 360;
-    let normalized_t_years    = parseInt((total_talifar_ms / ( 1000 * 100 * 100 * 20 * 360      )));
-
-    document.getElementById("TalifarTime").innerHTML = "Talifar Time: "
-      + normalized_t_years + " years " 
-      + normalized_t_days + " days " 
-      + normalized_t_hours + " hours " 
-      + normalized_t_minutes + " minutes " 
-      + normalized_t_seconds + " seconds ";
+    document.getElementById("VolumeA").value = OutVolumeA  ;
   }
 
   function ToTalifarTime() {
