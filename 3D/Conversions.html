@@ -12,21 +12,25 @@ table, th, td {
 <p>
   <table>
     <tr> 
-      <td>Volume A: </td><td> <input id="VolumeA" tabindex="1"> </td>
+      <td>Volume A: </td><td> <input id="VolumeA" tabindex="1" size=20> </td>
     </tr>
 
     <tr>
-      <td>Volume B:  </td><td> <input id="VolumeB" tabindex="2"></td>
+      <td>Volume B:  </td><td> <input id="VolumeB" tabindex="2" size=20></td>
     </tr>
     
     <tr>
-      <td>Ratio:  </td><td> <input id="RatioA" tabindex="3" size=30><input id="RatioB" tabindex="4" size=30></td>
+      <td>Ratio:  </td><td> <input id="RatioA" tabindex="3" size=10><input id="RatioB" tabindex="4" size=10></td>
     </tr>
   </table>
 </p>
 
 <button type="button" onclick="CalculateA()">Give me volume A!</button>
 <button type="button" onclick="CalculateB()">Give me volume B!</button>
+
+<p>
+  <div id="Debug"></div>
+</p>
 
 <script>
   function OnLoad() {
@@ -60,7 +64,8 @@ table, th, td {
       InRatioB = 1;
       document.getElementById("RatioB").value = InRatioB;
     }
-    
+
+    document.getElementById("TalifarTime").innerHTML += "Inputs received"
     let InRatio = InRatioB / InRatioA;
     
     let OutVolumeA  = Convert(InRatio, InVolumeB, 1000);
@@ -137,7 +142,7 @@ table, th, td {
 </script>
 
   <br><br>
-v 1.0.0.0
+v 1.0.0.1
 
 </body>
 </html>
