@@ -10,26 +10,47 @@ table, th, td {
 <body>
 
 <p>
-  <table>
-    <tr> 
-      <td>Volume A: </td><td> <input id="VolumeA" tabindex="1" size=26> </td>
-    </tr>
+  <div id="Inputs">
+    <div id="InputTable" style="min-width: 600px; max-width: 600px">
+        <div id="Material-Dropdown" style="float:right; vertical-align:bottom">
+            <label for="Materials">Material: </label>
+            <select name="Materials" id="Materials" onchange="ChangeMaterial()">
+                <option value="one-to-one">1:1</option>
+                <option value="mold-max-30">Mold Max 30 (Smoothon)</option>
+            </select>
+        </div>
+        <div id="VolumesAB" style="overflow: hidden;">
+            <table>
+                <tr> 
+                <td>Volume A: </td>
+                <td><input id="VolumeA" tabindex="1" size=26></td>
+                </tr>
 
-    <tr>
-      <td>Volume B:  </td><td> <input id="VolumeB" tabindex="2" size=26></td>
-    </tr>
-    
-    <tr>
-      <td>Ratio:  </td><td> <input id="RatioA" tabindex="3" size=10> <input id="RatioB" tabindex="4" size=10></td>
-    </tr>
-  </table>
-  <br>
-  <table>
-    <tr> 
-      <td>Total Volume: </td><td> <input id="VolumeC" tabindex="5" size=26> </td>
-    </tr>
-  </table>
+                <tr>
+                <td>Volume B:  </td>
+                <td><input id="VolumeB" tabindex="2" size=26></td>
+                </tr>
+                
+                <tr>
+                <td>Ratio:  </td>
+                <td> 
+                    <input id="RatioA" tabindex="3" size=10> 
+                    <input id="RatioB" tabindex="4" size=10>
+                </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <br>
+    <table>
+        <tr> 
+        <td>Total Volume: </td><td> <input id="VolumeC" tabindex="5" size=26> </td>
+        </tr>
+    </table>
+
+  </div>
 </p>
+
 
 <button type="button" onclick="CalculateA()">Give me volume A!</button><br>
 <button type="button" onclick="CalculateB()">Give me volume B!</button><br>
@@ -56,10 +77,27 @@ table, th, td {
     document.getElementById("VolumeC").value = null;
   }
 
-  function ResetRatios()
+  function ResetRatios(InRatioA = 1, InRatioB = 1)
   {
-    document.getElementById("RatioA").value = 1;
-    document.getElementById("RatioB").value = 1;
+    ChangeMaterial()
+  }
+
+  function ChangeMaterial()
+  {
+    var InMaterial = document.getElementById("Materials").value;
+    document.getElementById("Debug").innerHTML = "You selected: " + InMaterial;
+
+    switch (InMaterial)
+    {
+        case "one-to-one":
+            document.getElementById("RatioA").value = 1;
+            document.getElementById("RatioB").value = 1;
+            break;
+        case "mold-max-30":
+            document.getElementById("RatioA").value = 100;
+            document.getElementById("RatioB").value = 1;
+            break;
+    }
   }
 
   // See this documentation about why "correction factors" works here: https://stackoverflow.com/a/18908122
