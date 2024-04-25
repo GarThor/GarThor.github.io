@@ -110,7 +110,7 @@ table, th, td {
 
     document.getElementById("Debug").innerHTML = "Calculating Amount of B Based on input:" 
         + "<br>A = " + InVolumeA
-        + "<br>Ratio " + InRatioA + ":" + InRatioB
+        + "<br>Ratio " + InRatioB + ":" + InRatioA
         + " or " + (Number.isInteger(InRatio) ? InRatio.toFixed(1) : InRatio) + " to 1.";
     
     let OutVolumeB  = Convert(InRatio, InVolumeA, 1000);
@@ -119,10 +119,45 @@ table, th, td {
     document.getElementById("VolumeB").value = OutVolumeB;
     document.getElementById("VolumeC").value = OutVolumeC;
   }
+
+  function CalculateC() {
+    let InVolumeC = document.getElementById("VolumeC").value;
+    let InRatioA = document.getElementById("RatioA").value;
+    let InRatioB = document.getElementById("RatioB").value;
+          
+    InVolumeC  = InVolumeC   ? InVolumeC   : 0;
+    InRatioA  = InRatioA   ? InRatioA   : 0;
+    InRatioB  = InRatioB   ? InRatioB   : 0;
+
+    if (InRatioA <= 0)
+    {
+      InRatioA = 1;
+      document.getElementById("RatioA").value = InRatioA;
+    }
+    if (InRatioB <= 0)
+    {
+      InRatioB = 1;
+      document.getElementById("RatioB").value = InRatioB;
+    }
+
+    let InRatioBA = InRatioB / InRatioA;
+    let InRatioAB = InRatioA / InRatioB;
+
+    document.getElementById("Debug").innerHTML = "Calculating Amount of A + B Based on input:" 
+        + "<br>C = " + InVolumeC
+        + "<br>Ratio " + InRatioA + ":" + InRatioB
+        + " or " + (Number.isInteger(InRatioAB) ? InRatioAB.toFixed(1) : InRatioAB) + " to 1.";
+    
+    let OutVolumeA  = Convert(1/(1+InRatioAB), InVolumeC, 1000);
+    let OutVolumeB  = Convert(InRatioAB / (1 + InRatioAB), InVolumeC, 1000);
+
+    document.getElementById("VolumeA").value = OutVolumeA;
+    document.getElementById("VolumeB").value = OutVolumeB;
+  }
 </script>
 
   <br><br>
-v 1.0.0.1
+v 1.0.0.4
 
 </body>
 </html>
