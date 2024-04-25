@@ -12,15 +12,15 @@ table, th, td {
 <p>
   <table>
     <tr> 
-      <td>Volume A: </td><td> <input id="VolumeA" tabindex="1" size=20> </td>
+      <td>Volume A: </td><td> <input id="VolumeA" tabindex="1" size=26> </td>
     </tr>
 
     <tr>
-      <td>Volume B:  </td><td> <input id="VolumeB" tabindex="2" size=20></td>
+      <td>Volume B:  </td><td> <input id="VolumeB" tabindex="2" size=26></td>
     </tr>
     
     <tr>
-      <td>Ratio:  </td><td> <input id="RatioA" tabindex="3" size=10><input id="RatioB" tabindex="4" size=10></td>
+      <td>Ratio:  </td><td> <input id="RatioA" tabindex="3" size=10> <input id="RatioB" tabindex="4" size=10></td>
     </tr>
   </table>
 </p>
@@ -65,8 +65,12 @@ table, th, td {
       document.getElementById("RatioB").value = InRatioB;
     }
 
-    document.getElementById("TalifarTime").innerHTML += "Inputs received"
-    let InRatio = InRatioB / InRatioA;
+    let InRatio = InRatioA / InRatioB;
+
+    document.getElementById("Debug").innerHTML = "Calculating Amount of A Based on input:" 
+        + "<br>B = " + InVolumeB
+        + "<br>Ratio " + InRatioA + ":" + InRatioB
+        + " or " + (Number.isInteger(InRatio) ? InRatio.toFixed(1) : InRatio) + " to 1.";
     
     let OutVolumeA  = Convert(InRatio, InVolumeB, 1000);
 
