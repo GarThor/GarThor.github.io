@@ -1,0 +1,202 @@
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
+<title>GarThor's Volume Calculator</title>
+
+<head>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        .slide {
+            height: 0px;
+            width: 0px;
+            visibility: hidden;
+            -webkit-transition: height 500ms ease;
+            /* Add vendor prefixes for cross-browser support */
+            -moz-transition: height 500ms ease;
+            -ms-transition: height 500ms ease;
+            -o-transition: height 500ms ease;
+            transition: height 500ms ease;
+        }
+    </style>
+
+</head>
+
+<body>
+    <p>
+    </p>
+    <div id="Type-Dropdown">
+        <label for="Primitive">Material: </label>
+        <select name="Primitive" id="Primitive" onchange="ChangePrimative()">
+            <option name="cube">cube</option>
+            <option name="cylinder">cylinder</option>
+        </select>
+    </div>
+
+    <div id="Cube_Inputs" class="slide">
+        Mold Box:
+        <table>
+            <tr>
+                <td>X: </td>
+                <td><input id="X" tabindex="1" size=26></td>
+            </tr>
+            <tr>
+                <td>Y: </td>
+                <td><input id="Y" tabindex="1" size=26></td>
+            </tr>
+            <tr>
+                <td>Z: </td>
+                <td><input id="Z" tabindex="1" size=26></td>
+            </tr>
+            <tr>
+                <td>Units: </td>
+                <td>
+                    <select name="MoldBoxUnits" id="Primitive" onchange="ChangeMoldBoxUnits()">
+                        <option name="inch">inches</option>
+                        <option name="cm">centimeters</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="Cylinder_Inputs" class="slide">
+        Mold Cylinder!
+        <table>
+            <tr>
+                <td>Radius: </td>
+                <td><input id="Radius" tabindex="1" size=26></td>
+            </tr>
+            <tr>
+                <td>Height: </td>
+                <td><input id="Y" tabindex="1" size=26></td>
+            </tr>
+            <tr>
+                <td>Units: </td>
+                <td>
+                    <select name="MoldBoxUnits" id="Primitive" onchange="ChangeMoldBoxUnits()">
+                        <option name="inch">inches</option>
+                        <option name="cm">centimeters</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <p></p>
+
+    <div id="MoldVolume_div">
+        <table>
+            <tr>
+                <td>Calculated Mold Volume: </td>
+                <td><input id="MoldVolume" tabindex="1" size=26></td>
+                <td>
+                    <select name="MoldVolumeUnits" id="Primitive" onchange="ChangeMoldVolumeUnits()">
+                        <option name="cubic-inch">cubic inches</option>
+                        <option name="cubic cm">cubic centimeters</option>
+                        <option name="oz">ounce</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <p></p>
+
+    <div id="ObjVolume">
+        <table>
+            <tr>
+                <td>Cast Object Volume: </td>
+                <td><input id="ObjVol" tabindex="1" size=26></td>
+                <td>
+                    <select name="ObjVolUnits" id="Primitive" onchange="ChangeObjVolUnits()">
+                        <option name="cubic-inch">cubic inches</option>
+                        <option name="cubic cm">cubic centimeters</option>
+                        <option name="oz">ounce</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <p></p>
+
+    <button type="button" onclick="CalculateA()">Give me volume or give me death!</button><br>
+
+    <p>
+    </p>
+    <div id="Debug"></div>
+    <p></p>
+
+    <script>
+
+        function OnLoad() {
+            let CubeInputs = document.getElementById("Cube_Inputs");
+            let CylinderInputs = document.getElementById("Cylinder_Inputs");
+            CubeInputs.style.visibility = "hidden";
+            CylinderInputs.style.visibility = "hidden";
+        }
+
+        document.addEventListener("DOMContentLoaded", (event) => {
+            console.log("Dom done");
+            ChangePrimative();
+        });
+
+        function Show(obj) {
+            if (obj.style.visibility == "hidden" ||
+                obj.style.visibility == "") {
+                obj.style.visibility = "visible";
+                obj.style.height = "auto";
+                obj.style.width = "auto";
+            }
+        }
+
+        function Hide(obj) {
+            if (obj.style.visibility == "visible" ||
+                obj.style.visibility == "") {
+                obj.style.visibility = "hidden";
+                obj.style.height = 0;
+                obj.style.width = 0;
+            }
+
+        }
+
+        function ChangePrimative() {
+            console.log("loaded");
+            var InPrimitive = document.getElementById("Primitive").value;
+            document.getElementById("Debug").innerHTML = "You selected: " + InPrimitive;
+
+            let CubeInputs = document.getElementById("Cube_Inputs");
+            let CylinderInputs = document.getElementById("Cylinder_Inputs");
+
+            console.log("foobar!");
+
+            switch (InPrimitive) {
+                case "cylinder":
+                    console.log("case cylinder");
+                    console.log(CubeInputs.style)
+                    Show(CylinderInputs);
+                    Hide(CubeInputs);
+
+                    break;
+                case "cube":
+                    console.log("case cube");
+                    Hide(CylinderInputs);
+                    Show(CubeInputs);
+
+                    break;
+            }
+        }
+    </script>
+
+    <br><br>
+    v 1.0.0.7
+
+
+
+</body>
+
+</html>
