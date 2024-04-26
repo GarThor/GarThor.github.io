@@ -15,8 +15,6 @@ table, th, td {
         <div id="Material-Dropdown" style="float:right; vertical-align:bottom">
             <label for="Materials">Material: </label>
             <select name="Materials" id="Materials" onchange="ChangeMaterial()">
-                <option value="one-to-one">1:1</option>
-                <option value="mold-max-30">Mold Max 30 (Smoothon)</option>
             </select>
         </div>
         <div id="VolumesAB" style="overflow: hidden;">
@@ -63,7 +61,46 @@ table, th, td {
   <div id="Debug"></div>
 </p>
 
+<script
+  src="https://code.jquery.com/jquery-3.7.1.slim.js"
+  integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc="
+  crossorigin="anonymous"></script>
+<script src="jquery.csv.js"></script>
 <script>
+  let $Materials = [];
+  
+  $(document).ready(function() {
+    document.getElementById("Debug").innerHTML = "ready";
+
+    const logFileText = async file => {
+        try {
+            console.log("fetch");
+            const response = await fetch(file);
+            console.log("fetch 2");
+            const text = await response.text();
+            console.log(text)
+
+            $Materials = $.csv.toObjects(text);
+
+            var select = document.getElementById('Materials');
+            $Materials.forEach((obj) => {
+                let str = "" + obj.name + ": " + obj.pretty_name + " ... " + obj.volume_a + ":" + obj.volume_b;
+                console.log(str);
+                
+                var opt = document.createElement('option');
+                opt.value = obj.name;
+                opt.innerHTML = obj.pretty_name;
+                select.appendChild(opt)
+            })
+        }
+        catch (error) {
+            console.error(`Download error: ${error.message}`);
+        }
+    }
+
+    logFileText('https://garthor.github.io/3D/test.csv')
+  });
+
   function OnLoad() {
       document.getElementById("RatioA").value = 1;
       document.getElementById("RatioB").value = 1;
@@ -87,16 +124,16 @@ table, th, td {
     var InMaterial = document.getElementById("Materials").value;
     document.getElementById("Debug").innerHTML = "You selected: " + InMaterial;
 
-    switch (InMaterial)
-    {
-        case "one-to-one":
-            document.getElementById("RatioA").value = 1;
-            document.getElementById("RatioB").value = 1;
+    for (var mat of $Materials)  {
+        let str = "" + mat.name + ": " + mat.pretty_name + " ... " + mat.volume_a + ":" + mat.volume_b;
+        console.log(str);
+
+        if (mat.name === InMaterial)
+        {
+            document.getElementById("RatioA").value = mat.volume_a;
+            document.getElementById("RatioB").value = mat.volume_b;
             break;
-        case "mold-max-30":
-            document.getElementById("RatioA").value = 100;
-            document.getElementById("RatioB").value = 1;
-            break;
+        }
     }
   }
 
