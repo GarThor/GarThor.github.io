@@ -1,3 +1,15 @@
 name,pretty_name,volume_a,volume_b
 one-to-one,1:1,1,1
-mold-max-30,Mold Max 30 (Smoothon),100,1
+mold-max-10,Mold Max 10 (Smooth On),100,10
+mold-max-20,Mold Max 20 (Smooth On),100,10
+mold-max-25,Mold Max 25 (Smooth On),100,5
+mold-max-30,Mold Max 30 (Smooth On),100,10
+mold-max-40,Mold Max 40 (Smooth On),100,10
+mold-max-14NV,Mold Max 14NV (Smooth On),100,10
+mold-max-29NV,Mold Max 29NV (Smooth On),100,10
+mold-max-10T,Mold Max 10T (Smooth On),100,10
+mold-max-15T,Mold Max 15T (Smooth On),100,10
+mold-max-27T,Mold Max 27T (Smooth On),100,10
+mold-max-stroke,Mold Max STROKE (Smooth On),100,10
+mold-max-60,Mold Max 60 (Smooth On),100,3
+mold-max-xls,Mold Max XLS II (Smooth On),100,10
