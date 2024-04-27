@@ -55,7 +55,7 @@
             <tr>
                 <td>Units: </td>
                 <td>
-                    <select name="MoldBoxUnits" id="Primitive" onchange="ChangeMoldBoxUnits()">
+                    <select name="CubeMoldBoxUnits" id="CubeMoldBoxUnits" onchange="ChangeMoldBoxUnits()">
                         <option name="inch">inches</option>
                         <option name="cm">centimeters</option>
                     </select>
@@ -72,12 +72,12 @@
             </tr>
             <tr>
                 <td>Height: </td>
-                <td><input id="Y" tabindex="1" size=26></td>
+                <td><input id="Height" tabindex="1" size=26></td>
             </tr>
             <tr>
                 <td>Units: </td>
                 <td>
-                    <select name="MoldBoxUnits" id="Primitive" onchange="ChangeMoldBoxUnits()">
+                    <select name="CylinderMoldBoxUnits" id="CylinderMoldBoxUnits" onchange="ChangeMoldBoxUnits()">
                         <option name="inch">inches</option>
                         <option name="cm">centimeters</option>
                     </select>
@@ -94,10 +94,10 @@
                 <td>Calculated Mold Volume: </td>
                 <td><input id="MoldVolume" tabindex="1" size=26></td>
                 <td>
-                    <select name="MoldVolumeUnits" id="Primitive" onchange="ChangeMoldVolumeUnits()">
-                        <option name="cubic-inch">cubic inches</option>
-                        <option name="cubic cm">cubic centimeters</option>
-                        <option name="oz">ounce</option>
+                    <select aria-label="Units" name="MoldVolumeUnits" id="MoldVolumeUnits" onchange="ChangeMoldVolumeUnits()">
+                        <option value = "cubic-inch" name = "cubic-inch">cubic inches</option>
+                        <option value = "cubic-cm"   name = "cubic-cm"  >cubic centimeters</option>
+                        <option value = "oz"         name = "oz"        >ounce</option>
                     </select>
                 </td>
             </tr>
@@ -113,6 +113,24 @@
                 <td><input id="ObjVol" tabindex="1" size=26></td>
                 <td>
                     <select name="ObjVolUnits" id="Primitive" onchange="ChangeObjVolUnits()">
+                        <option name="cubic-inch">cubic inches</option>
+                        <option name="cubic cm">cubic centimeters</option>
+                        <option name="oz">ounce</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <p></p>
+
+    <div id="Output">
+        <table>
+            <tr>
+                <td>Silicone: </td>
+                <td><input id="SiliconeVolume" tabindex="1" size=26></td>
+                <td>
+                    <select aria-label="Units" name="SiliconeUnits" id="SiliconeUnits" onchange="ChangeSiliconeUnits()">
                         <option name="cubic-inch">cubic inches</option>
                         <option name="cubic cm">cubic centimeters</option>
                         <option name="oz">ounce</option>
