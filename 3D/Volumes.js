@@ -1,3 +1,36 @@
+// See this documentation about why "correction factors" works here: https://stackoverflow.com/a/18908122
+function Convert (ratio, number, correctionFactor = 1.0)
+{
+    return ratio * correctionFactor * number * correctionFactor / Math.pow(correctionFactor, 2);
+}
+
+$CubicInch = {
+    ToFlOz : function (Val)
+    {
+        return Convert(0.554113, Val, 100000);
+    },
+    
+    ToCubicCM : function (Val)
+    {
+        return Convert(16.387064, Val, 1000000);
+    }
+}
+
+function CubicCMToFlOz(Val)
+{
+    return Convert(0.033814, Val, 1000000);
+}
+
+function FlOzToCubicInch(Val)
+{
+    return Convert(1.804688, Val, 1000000)
+}
+
+function FlOzToCubicCM(Val)
+{
+    return Convert(29.57353, Val, 100000);
+}
+
 function OnLoad() {
     let CubeInputs = document.getElementById("Cube_Inputs");
     let CylinderInputs = document.getElementById("Cylinder_Inputs");
@@ -61,6 +94,52 @@ function ChangeMoldBoxUnits() {
 
 function ChangeMoldVolumeUnits() {
     // TBD!
+}
+
+function ChangeSiliconeUnits(event) {
+    console.log(event);
+
+    console.log(event.target);
+
+    if (event.target['prevIdx'] == null) {
+        event.target['prevIdx'] = 0;
+    }
+
+    console.log("Current Index = ", event.target.selectedIndex);
+    console.log("Previous Index = ", event.target['prevIdx']);
+
+    if (event.target.selectedIndex == event.target['prevIdx']) {
+        return; // nothing to convert!
+    }
+
+    let Val = document.getElementById("SiliconeVolume").value;
+    switch (event.target[event.target.prevIdx].value) {
+        case "cubic-inch"   : 
+            console.log("From cu-in"); 
+            switch (event.target[event.target.selectedIndex].value)
+            {
+                case "cubic-cm"     : console.log("To cu-cm"); Val = $CubicInch.ToCubicCM(Val); break;
+                case "fl-oz"        : console.log("To fl-oz"); Val = $CubicInch.ToFlOz(Val); break;
+            }
+            break;
+        case "cubic-cm"     : 
+            console.log("From cu-cm"); 
+            switch (event.target[event.target.selectedIndex].value)
+            {
+                case "cubic-inch"     : console.log("To cu-in"); break;
+                case "fl-oz"        : console.log("To fl-oz"); break;
+            }
+            break;
+        case "fl-oz"        : 
+            console.log("From fl-oz"); 
+            switch (event.target[event.target.selectedIndex].value)
+            {
+                case "cubic-inch"     : console.log("To cu-in"); break;
+                case "cubic-cm"       : console.log("To cu-cm"); break;
+            }
+            break;
+    }
+    document.getElementById("SiliconeVolume").value = Val;
 }
 
 function CalculateVolumes() {

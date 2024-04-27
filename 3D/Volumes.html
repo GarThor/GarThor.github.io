@@ -130,10 +130,10 @@
                 <td>Silicone: </td>
                 <td><input id="SiliconeVolume" tabindex="1" size=26></td>
                 <td>
-                    <select aria-label="Units" name="SiliconeUnits" id="SiliconeUnits" onchange="ChangeSiliconeUnits()">
-                        <option name="cubic-inch">cubic inches</option>
-                        <option name="cubic cm">cubic centimeters</option>
-                        <option name="oz">ounce</option>
+                    <select aria-label="Units" name="SiliconeUnits" id="SiliconeUnits" onchange="ChangeSiliconeUnits(event)">
+                        <option name="cubic-inch"  value="cubic-inch"   >cubic inches</option>
+                        <option name="cubic-cm"    value="cubic-cm"     >cubic centimeters</option>
+                        <option name="fl-oz"       value="fl-oz"        >fluid ounce</option>
                     </select>
                 </td>
             </tr>
