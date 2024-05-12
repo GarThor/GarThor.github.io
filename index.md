@@ -12,4 +12,4 @@
 
 [Volumes](3D/Volumes.html)
 
-[Fonts](fonts)
+[Fonts](fonts/fonts.css)
